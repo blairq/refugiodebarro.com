@@ -6,6 +6,7 @@ Página de inicio animada de **Refugio de Barro**. Sitio estático: no requiere 
 index.html          estructura + ilustraciones SVG inline
 css/styles.css      estilos (paleta de marca: #4d2208 · #f8f3ea · #6d7653)
 js/main.js          animaciones (GSAP + ScrollTrigger + DrawSVG + SplitText)
+js/audio.js         música ambiente generativa (Web Audio, sin archivos)
 assets/img/         fotos y logo del sitio original, optimizados a WebP
 assets/vendor/      GSAP 3.15 vendorizado (licencia estándar de GreenSock, gratuita)
 ```
@@ -28,6 +29,8 @@ Links: tienda → `/biblioteca`, e-book → `refugiodebarro.online`, WhatsApp �
 7. **Técnicas**: recorrido horizontal (Superadobe, Adobe y cob, Tapial, Fardos de paja, Quincha), cada una con su animación.
 8. **E-book**: el libro entra en 3D, flota, brilla y sigue al mouse.
 9. **Tienda** y **Contacto** nocturno (luna, estrellas, luciérnagas) + botón flotante de WhatsApp.
+
+10. **Música ambiente** (botón abajo a la izquierda): acordes suaves, notas tipo kalimba y viento, generados en vivo con Web Audio. De día suenan pájaros y al llegar a la escena nocturna se cruzan con grillos. Arranca sólo con un clic, recuerda la preferencia y se pausa con la pestaña oculta.
 
 Todo lo ligado al scroll usa `scrub`, así que se des-anima al volver hacia arriba.
 
