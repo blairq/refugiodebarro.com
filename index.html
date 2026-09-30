@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Refugio de Barro</title>
+  <meta name="description" content="Refugio de Barro — arquitectura de tierra hecha a mano. Un lugar para aprender, construir y habitar despacio.">
+  <meta name="theme-color" content="#f3e3cb">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath d='M8 56h48V30L32 12 8 30z' fill='%23c4683f'/%3E%3Cpath d='M27 56V42a5 5 0 0 1 10 0v14' fill='%233b2418'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    /* Activa el modo animado sólo si el usuario no pidió reducir movimiento.
+       Si GSAP no llega a cargar, se vuelve al diseño estático. */
+    (function (d) {
+      if (!window.matchMedia || !matchMedia('(prefers-reduced-motion: no-preference)').matches) return;
+      d.classList.add('js-motion');
+      setTimeout(function () { if (!window.gsap) d.classList.remove('js-motion'); }, 4000);
+    })(document.documentElement);
+  </script>
+</head>
+<body>
+  <!-- Barra de progreso de lectura -->
+  <div class="progress" aria-hidden="true"><span></span></div>
+
+  <header class="nav">
+    <a class="nav__logo" href="#top" aria-label="Refugio de Barro, inicio">
+      <svg viewBox="0 0 48 48" aria-hidden="true"><path class="draw" d="M6 42h36M10 42V24L24 9l14 15v18M20 42V32a4 4 0 0 1 8 0v10"/></svg>
+      <span>Refugio de Barro</span>
+    </a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#barro">El barro</a>
+      <a href="#construccion">Cómo construimos</a>
+      <a href="#capitulos">Capítulos</a>
+      <a href="#materiales">Materiales</a>
+      <a href="#visita" class="nav__cta">Visitanos</a>
+    </nav>
+  </header>
+
+  <main id="top">
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="hero">
+      <svg class="hero__scene" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <defs>
+          <linearGradient id="skyDay" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#f7e6cd"/>
+            <stop offset=".6" stop-color="#f3d2a6"/>
+            <stop offset="1" stop-color="#eeb98a"/>
+          </linearGradient>
+          <linearGradient id="skyDusk" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#6d4a6b"/>
+            <stop offset=".55" stop-color="#d9785a"/>
+            <stop offset="1" stop-color="#f2a765"/>
+          </linearGradient>
+          <radialGradient id="sunGlow">
+            <stop offset="0" stop-color="#ffd98a" stop-opacity=".9"/>
+            <stop offset="1" stop-color="#ffd98a" stop-opacity="0"/>
+          </radialGradient>
+          <symbol id="cloud" viewBox="0 0 200 70">
+            <path d="M20 60c-14 0-20-18-6-24 0-16 22-22 32-12C52 8 84 2 98 20c12-10 36-6 38 12 18-4 34 8 30 22 8 2 10 6 8 6z" fill="#fff8ec"/>
+          </symbol>
+        </defs>
+        <rect width="1440" height="900" fill="url(#skyDay)"/>
+        <rect class="sky-dusk" width="1440" height="900" fill="url(#skyDusk)" opacity="0"/>
+
+        <g class="sun">
+          <circle cx="1090" cy="250" r="190" fill="url(#sunGlow)"/>
+          <circle cx="1090" cy="250" r="72" fill="#f6b85a"/>
+        </g>
+
+        <g class="clouds">
+          <use href="#cloud" class="cloud" x="120" y="120" width="220" height="77" opacity=".9"/>
+          <use href="#cloud" class="cloud" x="760" y="80" width="170" height="60" opacity=".75"/>
+          <use href="#cloud" class="cloud" x="1180" y="340" width="150" height="52" opacity=".7"/>
+          <use href="#cloud" class="cloud" x="420" y="300" width="120" height="42" opacity=".6"/>
+        </g>
+
+        <g class="birds" fill="none" stroke="#5a3a2a" stroke-width="3" stroke-linecap="round">
+          <path class="bird" d="M300 230q12-12 22 0q10-12 22 0"/>
+          <path class="bird" d="M350 200q9-9 16 0q7-9 16 0"/>
+          <path class="bird" d="M390 245q7-7 13 0q6-7 13 0"/>
+        </g>
+
+        <path class="hill hill--far" fill="#dba578" d="M0 560C200 480 380 520 560 500 760 470 900 430 1100 480c160 40 260 20 340 10V900H0z"/>
+        <g class="hill hill--mid">
+          <path fill="#c27b4d" d="M0 640c180-40 320-30 480-10 180 25 340-40 520-30 180 10 300 50 440 30V900H0z"/>
+          <!-- casita en la loma -->
+          <g class="hero-house" transform="translate(1070 548)">
+            <ellipse cx="60" cy="72" rx="80" ry="10" fill="#9c5a33" opacity=".5"/>
+            <path d="M8 72V34h104v38z" fill="#e2ad76"/>
+            <path d="M0 36 60 2l60 34z" fill="#8b4a2a"/>
+            <path d="M0 36c20-6 40-10 60-10s40 4 60 10" fill="none" stroke="#6b8a4a" stroke-width="8" stroke-linecap="round"/>
+            <path d="M50 72V52a10 10 0 0 1 20 0v20z" fill="#5a3322"/>
+            <circle class="hero-window" cx="92" cy="50" r="7" fill="#f7d58a" opacity=".35"/>
+            <path d="M24 36V22h10v8" fill="#8b4a2a"/>
+          </g>
+        </g>
+        <path class="hill hill--near" fill="#8f4f2d" d="M0 740c220-40 420-20 620 5 200 25 400-25 600-15 110 5 180 15 220 10V900H0z"/>
+        <g class="grass" fill="none" stroke="#5f7141" stroke-width="4" stroke-linecap="round">
+          <path d="M120 760q4-30 -8-44M126 760q2-24 14-36M132 760q-2-18 -16-26"/>
+          <path d="M1260 752q4-30-8-44M1266 752q2-24 14-36M1272 752q-2-18-16-26"/>
+          <path d="M540 770q4-24-6-36M546 770q2-18 12-28"/>
+        </g>
+        <path class="hill hill--front" fill="#5c3621" d="M0 830c240-30 520-10 760 0 260 10 480-20 680-10V900H0z"/>
+      </svg>
+
+      <div class="hero__content">
+        <p class="eyebrow hero__eyebrow">Arquitectura de tierra · hecha a mano</p>
+        <h1 class="hero__title" aria-label="Refugio de Barro">
+          <span class="hero__line">Refugio</span>
+          <span class="hero__line hero__line--accent">de Barro</span>
+        </h1>
+        <svg class="hero__underline" viewBox="0 0 490 30" aria-hidden="true"><path class="doodle" d="M6 18C80 6 160 26 240 13s160-5 244 5"/></svg>
+        <p class="hero__lead">Un lugar construido con tierra, agua, paja y paciencia. Para aprender, para compartir y para habitar despacio.</p>
+        <a class="btn hero__btn" href="#barro">Empezar el recorrido <span aria-hidden="true">↓</span></a>
+
+        <!-- Garabatos dibujados a mano -->
+        <svg class="doodle-svg d-sun" viewBox="0 0 100 100" aria-hidden="true">
+          <path class="doodle" d="M50 34c9 0 16 7 16 16s-7 16-16 16-16-7-16-16c0-8 6-15 15-16"/>
+          <path class="doodle" d="M50 8v12M50 80v12M8 50h12M80 50h12M20 20l9 9M71 71l9 9M80 20l-9 9M29 71l-9 9"/>
+        </svg>
+        <svg class="doodle-svg d-leaf" viewBox="0 0 90 90" aria-hidden="true">
+          <path class="doodle" d="M12 78C18 38 48 16 82 8c-4 36-30 66-70 70z"/>
+          <path class="doodle" d="M12 78C32 56 50 38 70 20"/>
+        </svg>
+        <svg class="doodle-svg d-heart" viewBox="0 0 80 80" aria-hidden="true">
+          <path class="doodle" d="M40 70C12 48 4 28 18 16c11-9 22-2 22 9 0-11 12-18 22-9 14 12 6 32-22 54"/>
+        </svg>
+        <svg class="doodle-svg d-swirl" viewBox="0 0 90 70" aria-hidden="true">
+          <path class="doodle" d="M8 40C8 10 58 6 60 34c2 22-28 24-28 8 0-10 14-12 16-2"/>
+        </svg>
+        <svg class="doodle-svg d-spark" viewBox="0 0 50 50" aria-hidden="true">
+          <path class="doodle" d="M25 4v42M4 25h42M10 10l30 30M40 10 10 40"/>
+        </svg>
+        <svg class="doodle-svg d-arrow" viewBox="0 0 140 70" aria-hidden="true">
+          <g transform="matrix(-1 0 0 1 140 0)">
+            <path class="doodle" d="M6 20c30-10 70 40 120 22"/>
+            <path class="doodle" d="M110 30l18 12-20 10"/>
+          </g>
+        </svg>
+        <svg class="doodle-svg d-hand" viewBox="0 0 90 100" aria-hidden="true">
+          <path class="doodle" d="M28 92c-10-12-20-30-22-40-2-6 6-10 10-4l10 16V14c0-6 9-6 9 0v34-40c0-6 9-6 9 0v40-36c0-6 9-6 9 0v38-30c0-6 9-6 9 0v44c0 14-6 24-12 32"/>
+        </svg>
+        <p class="hand-note hero__note">¡manos a la tierra!</p>
+      </div>
+
+      <div class="scroll-hint" aria-hidden="true">
+        <span>scroll</span>
+        <svg viewBox="0 0 24 40"><rect x="2" y="2" width="20" height="36" rx="10"/><circle class="scroll-dot" cx="12" cy="12" r="3"/></svg>
+      </div>
+    </section>
+
+    <!-- ============ MANIFIESTO ============ -->
+    <section class="manifesto" id="barro">
+      <div class="container">
+        <p class="eyebrow">El barro</p>
+        <p class="manifesto__text">
+          El barro es el material más antiguo con el que habitamos la tierra. Respira, abriga en invierno y refresca en verano. Se toma del mismo suelo que pisamos y, cuando ya no sirve, vuelve a él sin dejar rastro. Construir con barro es construir <em>con las manos</em>, en ronda, sin apuro.
+        </p>
+        <svg class="manifesto__scribble" viewBox="0 0 300 60" aria-hidden="true"><path class="doodle" d="M6 40c40-30 70 10 110-8s60-26 90-6 50 14 88-10"/></svg>
+      </div>
+      <svg class="manifesto__doodle m-d1" viewBox="0 0 90 90" aria-hidden="true"><path class="doodle" d="M12 78C18 38 48 16 82 8c-4 36-30 66-70 70zM12 78C32 56 50 38 70 20"/></svg>
+      <svg class="manifesto__doodle m-d2" viewBox="0 0 100 100" aria-hidden="true"><path class="doodle" d="M50 34c9 0 16 7 16 16s-7 16-16 16-16-7-16-16c0-8 6-15 15-16M50 8v12M50 80v12M8 50h12M80 50h12"/></svg>
+    </section>
+
+    <!-- ============ CONSTRUCCIÓN (pin) ============ -->
+    <section class="build" id="construccion">
+      <div class="build__inner">
+        <div class="build__copy">
+          <p class="eyebrow">Cómo construimos</p>
+          <h2 class="build__title">Del suelo<br>al refugio</h2>
+          <div class="build__steps">
+            <article class="step"><span class="step__n">01</span><h3>Tierra</h3><p>Todo empieza con el suelo del lugar: tierra arcillosa, zarandeada y lista para despertar.</p></article>
+            <article class="step"><span class="step__n">02</span><h3>Agua y paja</h3><p>Se amasa con los pies, se suma paja y el barro toma cuerpo. Es la parte más divertida.</p></article>
+            <article class="step"><span class="step__n">03</span><h3>Adobes</h3><p>Moldeamos ladrillos crudos que se secan al sol, uno por uno, y los levantamos en hiladas.</p></article>
+            <article class="step"><span class="step__n">04</span><h3>Revoque</h3><p>Una piel de barro fino protege y suaviza los muros. Cada mano deja su huella.</p></article>
+            <article class="step"><span class="step__n">05</span><h3>Techo vivo</h3><p>Un techo que abriga y florece: aislante, verde y lleno de vida.</p></article>
+            <article class="step"><span class="step__n">06</span><h3>Refugio</h3><p>Se enciende la luz, sale el humo de la salamandra. La casa ya respira.</p></article>
+          </div>
+          <div class="build__progress" aria-hidden="true">
+            <span class="build__count">01</span><span class="build__bar"><i></i></span><span>06</span>
+          </div>
+        </div>
+
+        <div class="build__stage">
+          <svg viewBox="0 0 600 520" aria-hidden="true">
+            <defs><radialGradient id="warmGlow"><stop offset="0" stop-color="#ffd98a" stop-opacity=".75"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient></defs>
+            <circle class="b-sun" cx="490" cy="90" r="38" fill="#f6b85a"/>
+            <ellipse cx="300" cy="462" rx="260" ry="26" fill="#c98f60" opacity=".35"/>
+            <path d="M20 462h560" stroke="#8f4f2d" stroke-width="4" stroke-linecap="round"/>
+
+            <!-- 01 montículo de tierra -->
+            <g class="b-mound">
+              <path d="M150 462c10-60 70-90 150-90s140 30 150 90z" fill="#9c5a33"/>
+              <path d="M200 430c20-10 40-8 60 0M320 410c20-8 40-6 58 4M250 450c14-6 30-6 44 0" stroke="#7a4226" stroke-width="5" fill="none" stroke-linecap="round"/>
+            </g>
+            <!-- 02 agua y paja -->
+            <g class="b-water" fill="#7fb2c9">
+              <path class="drop" d="M240 250c10 16 16 24 16 32a16 16 0 0 1-32 0c0-8 6-16 16-32z"/>
+              <path class="drop" d="M300 220c10 16 16 24 16 32a16 16 0 0 1-32 0c0-8 6-16 16-32z"/>
+              <path class="drop" d="M360 250c10 16 16 24 16 32a16 16 0 0 1-32 0c0-8 6-16 16-32z"/>
+            </g>
+            <g class="b-straw" stroke="#e9c46a" stroke-width="5" stroke-linecap="round" fill="none">
+              <path d="M190 420l40-24M230 440l50-16M300 420l40 20M350 400l50 10M260 400l10-30M380 436l30-26M210 400l-10-26"/>
+            </g>
+            <!-- 03 adobes (generados en JS) -->
+            <g class="b-bricks"></g>
+            <!-- 04 revoque -->
+            <path class="b-plaster" d="M127 462V248h346v214H330V360a30 30 0 0 0-60 0v102z" fill="#e2ad76"/>
+            <g class="b-texture" stroke="#cf955e" stroke-width="3" fill="none" stroke-linecap="round">
+              <path d="M150 300c20-6 40-6 60 0M380 280c20-4 40-4 60 2M160 410c16-4 30-4 46 0M400 400c16-4 30-4 46 0"/>
+            </g>
+            <!-- 05 techo -->
+            <g class="b-roof">
+              <path d="M100 256 300 140l200 116z" fill="#8b4a2a"/>
+              <path d="M100 256h400" stroke="#6b3a20" stroke-width="10" stroke-linecap="round"/>
+            </g>
+            <g class="b-plants">
+              <circle cx="170" cy="222" r="14" fill="#6b8a4a"/><circle cx="215" cy="196" r="16" fill="#7d9b55"/>
+              <circle cx="258" cy="172" r="15" fill="#6b8a4a"/><circle cx="300" cy="150" r="13" fill="#8aa860"/>
+              <circle cx="342" cy="172" r="15" fill="#7d9b55"/><circle cx="386" cy="196" r="16" fill="#6b8a4a"/>
+              <circle cx="430" cy="222" r="14" fill="#8aa860"/>
+              <circle cx="215" cy="186" r="5" fill="#f2c14e"/><circle cx="342" cy="162" r="5" fill="#e98a6a"/><circle cx="430" cy="212" r="4" fill="#f2c14e"/>
+            </g>
+            <!-- 06 refugio -->
+            <g class="b-home">
+              <path d="M270 462V360a30 30 0 0 1 60 0v102z" fill="#5a3322"/>
+              <circle cx="318" cy="414" r="4" fill="#e9c46a"/>
+              <g class="b-window"><rect x="380" y="320" width="56" height="50" rx="24" fill="#f7d58a"/><path d="M408 320v50M380 346h56" stroke="#8b4a2a" stroke-width="5"/></g>
+              <circle class="b-glow" cx="408" cy="345" r="90" fill="url(#warmGlow)" opacity="0"/>
+              <path d="M170 200v-54h32v34" fill="#8b4a2a"/>
+              <g class="b-smoke" stroke="#b9a896" stroke-width="6" fill="none" stroke-linecap="round">
+                <path d="M186 140c-14-16 14-26 0-44s14-26 4-42"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CAPÍTULOS ============ -->
+    <section class="chapters" id="capitulos">
+      <div class="container">
+        <header class="section-head">
+          <p class="eyebrow">Capítulos</p>
+          <h2>Lo que pasa en el refugio</h2>
+          <p class="hand-note">(y un poco de lo que sentimos)</p>
+        </header>
+
+        <div class="cards">
+          <article class="card" style="--card:#f0dcc0">
+            <div class="card__inner">
+              <span class="card__num">Cap. I</span>
+              <svg class="card__icon" viewBox="0 0 80 80" aria-hidden="true"><path class="doodle" d="M8 60c10-20 24-30 32-30s22 10 32 30z"/><path class="doodle" d="M20 50c6-3 12-3 18 0M44 44c6-3 12-3 18 0"/></svg>
+              <h3>La tierra</h3>
+              <p>Aprendemos a leer el suelo: cuánta arcilla, cuánta arena, qué nos pide cada lugar.</p>
+              <span class="hand-note">el suelo habla</span>
+            </div>
+          </article>
+          <article class="card" style="--card:#e8b995">
+            <div class="card__inner">
+              <span class="card__num">Cap. II</span>
+              <svg class="card__icon" viewBox="0 0 90 100" aria-hidden="true"><path class="doodle" d="M28 92c-10-12-20-30-22-40-2-6 6-10 10-4l10 16V14c0-6 9-6 9 0v34-40c0-6 9-6 9 0v40-36c0-6 9-6 9 0v38-30c0-6 9-6 9 0v44c0 14-6 24-12 32"/></svg>
+              <h3>Las manos</h3>
+              <p>Técnicas de bioconstrucción: adobe, quincha, cob y revoques, siempre haciendo.</p>
+              <span class="hand-note">con las manos, en ronda</span>
+            </div>
+          </article>
+          <article class="card" style="--card:#dfe3c6">
+            <div class="card__inner">
+              <span class="card__num">Cap. III</span>
+              <svg class="card__icon" viewBox="0 0 80 80" aria-hidden="true"><path class="doodle" d="M10 72h60M16 72V40L40 16l24 24v32"/><path class="doodle" d="M34 72V56a6 6 0 0 1 12 0v16"/></svg>
+              <h3>El refugio</h3>
+              <p>Un espacio para quedarse: dormir entre muros de tierra y despertar con el campo.</p>
+              <span class="hand-note">casa que respira</span>
+            </div>
+          </article>
+          <article class="card" style="--card:#f3d6a4">
+            <div class="card__inner">
+              <span class="card__num">Cap. IV</span>
+              <svg class="card__icon" viewBox="0 0 80 80" aria-hidden="true"><path class="doodle" d="M14 20h52v40H14z"/><path class="doodle" d="M22 32h24M22 42h34M22 52h16"/></svg>
+              <h3>Talleres</h3>
+              <p>Encuentros prácticos para quienes quieren aprender desde cero o profundizar un oficio.</p>
+              <span class="hand-note">sin experiencia previa</span>
+            </div>
+          </article>
+          <article class="card" style="--card:#e7c7c0">
+            <div class="card__inner">
+              <span class="card__num">Cap. V</span>
+              <svg class="card__icon" viewBox="0 0 80 80" aria-hidden="true"><path class="doodle" d="M26 34a8 8 0 1 1 0-1M54 34a8 8 0 1 1 0-1"/><path class="doodle" d="M12 66c2-12 8-18 14-18s12 6 14 18M40 66c2-12 8-18 14-18s12 6 14 18"/></svg>
+              <h3>Comunidad</h3>
+              <p>Mingas, fogones y mates compartidos. Construir juntos es también construir vínculos.</p>
+              <span class="hand-note">nadie construye solo</span>
+            </div>
+          </article>
+          <article class="card" style="--card:#d9dccf">
+            <div class="card__inner">
+              <span class="card__num">Cap. VI</span>
+              <svg class="card__icon" viewBox="0 0 80 80" aria-hidden="true"><path class="doodle" d="M40 12a28 28 0 1 1-1 0"/><path class="doodle" d="M40 24v18l12 8"/></svg>
+              <h3>El tiempo</h3>
+              <p>El barro tiene su ritmo: secar, esperar, volver. Aprendemos a ir más despacio.</p>
+              <span class="hand-note">sin apuro</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ MATERIALES (horizontal) ============ -->
+    <section class="materials" id="materiales">
+      <div class="materials__head container">
+        <p class="eyebrow">Materiales</p>
+        <h2>Seis ingredientes,<br>una casa</h2>
+      </div>
+      <div class="materials__track">
+        <article class="panel" style="--panel:#b5652f">
+          <svg class="panel__art art-earth" viewBox="0 0 200 200" aria-hidden="true">
+            <rect class="layer" x="20" y="60" width="160" height="30" rx="14" fill="#e2ad76"/>
+            <rect class="layer" x="20" y="96" width="160" height="30" rx="14" fill="#c98f60"/>
+            <rect class="layer" x="20" y="132" width="160" height="30" rx="14" fill="#8f4f2d"/>
+            <circle class="pebble" cx="60" cy="75" r="5" fill="#7a4226"/><circle class="pebble" cx="130" cy="112" r="6" fill="#5c3621"/><circle class="pebble" cx="96" cy="148" r="4" fill="#e2ad76"/>
+          </svg>
+          <h3>Tierra</h3><p>Arcilla que une y arena que da estructura.</p>
+        </article>
+        <article class="panel" style="--panel:#c9a227">
+          <svg class="panel__art art-straw" viewBox="0 0 200 200" aria-hidden="true" fill="none" stroke="#fbeec1" stroke-width="7" stroke-linecap="round">
+            <path class="stalk" d="M60 180C60 130 50 90 40 40"/><path class="stalk" d="M90 180c0-60 6-100 16-150"/><path class="stalk" d="M120 180c0-50-4-90 10-130"/><path class="stalk" d="M150 180c-4-40 0-80 20-110"/>
+          </svg>
+          <h3>Paja</h3><p>La fibra que arma el barro y evita que se fisure.</p>
+        </article>
+        <article class="panel" style="--panel:#4f8aa3">
+          <svg class="panel__art art-water" viewBox="0 0 200 200" aria-hidden="true">
+            <path class="w-drop" d="M100 30c18 28 28 42 28 56a28 28 0 0 1-56 0c0-14 10-28 28-56z" fill="#d7eef6"/>
+            <ellipse class="ripple" cx="100" cy="160" rx="30" ry="8" fill="none" stroke="#d7eef6" stroke-width="4"/>
+            <ellipse class="ripple" cx="100" cy="160" rx="30" ry="8" fill="none" stroke="#d7eef6" stroke-width="4"/>
+          </svg>
+          <h3>Agua</h3><p>Despierta la arcilla. Sin agua, no hay barro.</p>
+        </article>
+        <article class="panel" style="--panel:#d9783c">
+          <svg class="panel__art art-sun" viewBox="0 0 200 200" aria-hidden="true">
+            <g class="rays" stroke="#ffe0a3" stroke-width="8" stroke-linecap="round"><path d="M100 14v26M100 160v26M14 100h26M160 100h26M39 39l18 18M143 143l18 18M161 39l-18 18M57 143l-18 18"/></g>
+            <circle cx="100" cy="100" r="40" fill="#ffe0a3"/>
+          </svg>
+          <h3>Sol</h3><p>Seca los adobes y calienta la casa por dentro.</p>
+        </article>
+        <article class="panel" style="--panel:#6b4a30">
+          <svg class="panel__art art-wood" viewBox="0 0 200 200" aria-hidden="true" fill="none" stroke="#e8c9a0" stroke-width="5" stroke-linecap="round">
+            <path class="ring" d="M100 30a70 70 0 1 1-1 0"/><path class="ring" d="M100 52a48 48 0 1 1-1 0"/><path class="ring" d="M100 74a26 26 0 1 1-1 0"/><path class="ring" d="M100 94a6 6 0 1 1-1 0"/>
+          </svg>
+          <h3>Madera</h3><p>Estructura, aberturas y vigas que sostienen el techo.</p>
+        </article>
+        <article class="panel" style="--panel:#8d9a7a">
+          <svg class="panel__art art-lime" viewBox="0 0 200 200" aria-hidden="true" fill="none" stroke="#fbf7ef" stroke-width="16" stroke-linecap="round">
+            <path class="stroke" d="M30 60c40-10 90 10 140-4"/><path class="stroke" d="M30 100c50-8 80 8 140-2"/><path class="stroke" d="M30 140c40-6 100 10 140-6"/>
+          </svg>
+          <h3>Cal</h3><p>La terminación blanca que deja respirar a los muros.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============ VISITA (noche) ============ -->
+    <section class="visit" id="visita">
+      <svg class="visit__sky" viewBox="0 0 1440 800" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+        <g class="stars" fill="#fff6dc"></g>
+        <defs><radialGradient id="nightGlow"><stop offset="0" stop-color="#ffd27a" stop-opacity=".6"/><stop offset="1" stop-color="#ffd27a" stop-opacity="0"/></radialGradient><mask id="moonCut"><rect width="1440" height="800" fill="#fff"/><circle cx="1174" cy="154" r="50" fill="#000"/></mask></defs>
+        <g class="moon"><circle cx="1150" cy="170" r="90" fill="#fbeec1" opacity=".08"/><circle cx="1150" cy="170" r="54" fill="#fbeec1" mask="url(#moonCut)"/></g>
+        <path fill="#2a2338" d="M0 600c200-60 400-40 620-10 220 30 420-40 820-20V800H0z"/>
+        <g transform="translate(740 520)">
+          <path d="M8 90V44h124v46z" fill="#3a2c3c"/>
+          <path d="M0 46 70 4l70 42z" fill="#2c2030"/>
+          <rect class="visit__window" x="92" y="56" width="22" height="20" rx="10" fill="#ffd27a" opacity=".2"/>
+          <circle class="visit__glow" cx="103" cy="66" r="80" fill="url(#nightGlow)" opacity="0"/>
+        </g>
+        <path fill="#1d1828" d="M0 700c260-30 520-20 780-4s460-10 660-6V800H0z"/>
+        <g class="fireflies" fill="#ffe89a"></g>
+      </svg>
+
+      <div class="container visit__content">
+        <p class="eyebrow">Visitanos</p>
+        <h2 class="visit__title">Vení a embarrarte</h2>
+        <svg class="visit__scribble" viewBox="0 0 320 40" aria-hidden="true"><path class="doodle" d="M6 26c50-20 100 12 150-4s100-14 158 2"/></svg>
+        <div class="visit__card">
+          <p>Contanos si querés sumarte a un taller, quedarte unos días o construir tu propia casa de barro. Te respondemos con tiempo, como hacemos todo acá.</p>
+          <div class="visit__actions">
+            <a class="btn" href="mailto:hola@refugiodebarro.com">Escribinos</a>
+            <a class="btn btn--ghost" href="#" rel="noopener">Instagram</a>
+          </div>
+          <p class="hand-note">te esperamos con el mate listo ✶</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span class="year">2026</span> Refugio de Barro · Hecho a mano, con tierra.</p>
+    <a href="#top">Volver arriba ↑</a>
+  </footer>
+
+  <script src="assets/vendor/gsap.min.js" defer></script>
+  <script src="assets/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="assets/vendor/DrawSVGPlugin.min.js" defer></script>
+  <script src="assets/vendor/SplitText.min.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
