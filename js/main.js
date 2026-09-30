@@ -93,7 +93,8 @@
     // Aparición progresiva del título
     const intro = gsap.timeline({ defaults: { ease: "power3.out" } });
     intro
-      .from(".hero__eyebrow", { y: 20, autoAlpha: 0, duration: 0.8 })
+      .from(".hero__seal", { scale: 0, rotate: -160, autoAlpha: 0, duration: 1.2, ease: "back.out(1.6)" })
+      .from(".hero__eyebrow", { y: 20, autoAlpha: 0, duration: 0.8 }, "-=0.6")
       .from(split.chars, {
         yPercent: 110,
         autoAlpha: 0,
@@ -106,7 +107,8 @@
       }, "-=0.4")
       .from(".hero__underline .doodle", { drawSVG: 0, duration: 1.1, ease: "power2.inOut" }, "-=0.5")
       .from(".hero__lead", { y: 24, autoAlpha: 0, duration: 0.9 }, "-=0.8")
-      .from(".hero__btn", { y: 20, autoAlpha: 0, duration: 0.7 }, "-=0.6")
+      .from(".hero__sub", { y: 20, autoAlpha: 0, duration: 0.8 }, "-=0.6")
+      .from(".hero__btn", { y: 20, autoAlpha: 0, duration: 0.7, stagger: 0.12 }, "-=0.5")
       .from(".hero__note", { autoAlpha: 0, scale: 0.5, rotate: -30, duration: 0.9, ease: "back.out(2.2)" }, "-=0.3")
       .from(".scroll-hint", { autoAlpha: 0, y: 12, duration: 0.6 }, "-=0.4");
 
@@ -148,13 +150,19 @@
       .to(split.chars, { y: () => R(-160, -60), stagger: { each: 0.02, from: "random" } }, 0)
       .to(content, { y: -90, autoAlpha: 0 }, 0.15)
       .to(".hero .doodle-svg", { x: () => R(-140, 140), scale: 0.4, autoAlpha: 0, stagger: 0.03 }, 0)
-      .to(".scroll-hint", { autoAlpha: 0 }, 0);
+      .to(".scroll-hint", { autoAlpha: 0 }, 0)
+      .to(".hero__seal", { rotate: 120, scale: 0.6 }, 0);
   }
 
   /* =========================================================
      MANIFIESTO — las palabras se encienden al leer
      ========================================================= */
   function manifesto() {
+    const title = SplitText.create(".manifesto__title", { type: "chars" });
+    gsap.from(title.chars, {
+      yPercent: 80, autoAlpha: 0, rotate: () => R(-12, 12), stagger: 0.03, ease: "none",
+      scrollTrigger: { trigger: ".manifesto__title", start: "top 85%", end: "bottom 55%", scrub: 1 },
+    });
     const split = SplitText.create(".manifesto__text", { type: "words" });
     gsap.fromTo(split.words, { opacity: 0.14 }, {
       opacity: 1, ease: "none", stagger: 0.1,
@@ -174,6 +182,69 @@
         scrollTrigger: { trigger: ".manifesto", start: "top 70%", end: "center center", scrub: true },
       });
     });
+  }
+
+  /* =========================================================
+     FOTO — la casa real se abre con el scroll
+     ========================================================= */
+  function photoReveal(isMobile) {
+    const big = SplitText.create(".reveal__big", { type: "words" });
+    gsap.timeline({
+      defaults: { ease: "none" },
+      scrollTrigger: { trigger: ".reveal", start: "top top", end: isMobile ? "+=120%" : "+=160%", pin: true, scrub: 1 },
+    })
+      .fromTo(".reveal__frame",
+        { clipPath: isMobile ? "inset(22% 12% 22% 12% round 180px)" : "inset(16% 30% 16% 30% round 260px)" },
+        { clipPath: "inset(0% 0% 0% 0% round 0px)", duration: 1 }, 0)
+      .fromTo(".reveal__img", { scale: 1.4, rotate: -3 }, { scale: 1, rotate: 0, duration: 1 }, 0)
+      .from(".reveal__shade", { opacity: 0, duration: 0.4 }, 0.55)
+      .from(".reveal__kicker", { y: 40, autoAlpha: 0, duration: 0.3 }, 0.7)
+      .from(big.words, { yPercent: 100, autoAlpha: 0, stagger: 0.06, duration: 0.3 }, 0.8)
+      .to({}, { duration: 0.3 });
+  }
+
+  /* =========================================================
+     NOSOTROS — foto del muro de botellas + luces de colores
+     ========================================================= */
+  function story() {
+    gsap.fromTo(".story__photo",
+      { clipPath: "inset(100% 0% 0% 0% round 200px 200px 22px 22px)" },
+      { clipPath: "inset(0% 0% 0% 0% round 200px 200px 22px 22px)", ease: "none",
+        scrollTrigger: { trigger: ".story__media", start: "top 90%", end: "top 35%", scrub: 1 } });
+    gsap.fromTo(".story__photo img", { yPercent: -12 }, {
+      yPercent: 0, ease: "none",
+      scrollTrigger: { trigger: ".story", start: "top bottom", end: "bottom top", scrub: true },
+    });
+
+    const glass = $$(".glass");
+    gsap.from(glass, {
+      scale: 0, autoAlpha: 0, duration: 0.9, ease: "back.out(3)", stagger: { each: 0.12, from: "random" },
+      scrollTrigger: { trigger: ".story__media", start: "top 60%", toggleActions: "play none none reverse" },
+    });
+    gsap.from(".story__media figcaption", {
+      autoAlpha: 0, scale: 0.6, rotate: -25, duration: 0.8, ease: "back.out(2)",
+      scrollTrigger: { trigger: ".story__media", start: "center 70%", toggleActions: "play none none reverse" },
+    });
+
+    const lines = SplitText.create(".story__copy h2, .story__p", { type: "lines", mask: "lines" });
+    gsap.from(lines.lines, {
+      yPercent: 100, duration: 0.9, ease: "power3.out", stagger: 0.08,
+      scrollTrigger: { trigger: ".story__copy", start: "top 75%", toggleActions: "play none none reverse" },
+    });
+    gsap.from(".story__copy .eyebrow", {
+      autoAlpha: 0, x: -30, duration: 0.6,
+      scrollTrigger: { trigger: ".story__copy", start: "top 75%", toggleActions: "play none none reverse" },
+    });
+    gsap.fromTo(".story__quote", { y: 80, rotate: -4, autoAlpha: 0 }, {
+      y: 0, rotate: -1, autoAlpha: 1, ease: "none",
+      scrollTrigger: { trigger: ".story__quote", start: "top 95%", end: "top 60%", scrub: 1 },
+    });
+
+    const loops = glass.map(g => gsap.to(g, {
+      y: () => R(-18, 18), x: () => R(-10, 10),
+      duration: () => R(2, 3.5), repeat: -1, yoyo: true, repeatRefresh: true, ease: "sine.inOut",
+    }));
+    loopWhileVisible(".story", loops);
   }
 
   /* =========================================================
@@ -301,9 +372,9 @@
   }
 
   /* =========================================================
-     MATERIALES — recorrido horizontal
+     TÉCNICAS — recorrido horizontal
      ========================================================= */
-  function materials() {
+  function techniques() {
     const section = $(".materials");
     const track = $(".materials__track");
     const dist = () => Math.max(0, track.scrollWidth - window.innerWidth);
@@ -330,20 +401,72 @@
       gsap.from($$("h3, p", panel), { y: 40, autoAlpha: 0, stagger: 0.1, ease: "none", scrollTrigger: inView(panel) });
     });
 
-    // cada material con su propia animación
+    // cada técnica con su propia animación
+    gsap.from(".art-dome .tube", { drawSVG: "50% 50%", stagger: 0.12, ease: "none", scrollTrigger: inView(".art-dome") });
     gsap.from(".art-earth .layer", { x: i => (i % 2 ? 200 : -200), stagger: 0.15, ease: "none", scrollTrigger: inView(".art-earth") });
-    gsap.from(".art-earth .pebble", { scale: 0, transformOrigin: "50% 50%", stagger: 0.1, ease: "none", scrollTrigger: inView(".art-earth") });
-    gsap.from(".art-straw .stalk", { drawSVG: 0, stagger: 0.12, ease: "none", scrollTrigger: inView(".art-straw") });
-    gsap.from(".art-wood .ring", { drawSVG: 0, stagger: 0.12, ease: "none", scrollTrigger: inView(".art-wood") });
-    gsap.from(".art-lime .stroke", { drawSVG: 0, stagger: 0.2, ease: "none", scrollTrigger: inView(".art-lime") });
-    gsap.to(".art-sun .rays", { rotate: 180, transformOrigin: "50% 50%", ease: "none", scrollTrigger: inView(".art-sun", { end: "right left" }) });
+    gsap.from(".art-earth .straws path", { drawSVG: 0, stagger: 0.1, ease: "none", scrollTrigger: inView(".art-earth") });
+    gsap.from(".art-rammed .strata rect", { scaleY: 0, transformOrigin: "50% 100%", stagger: -0.15, ease: "none", scrollTrigger: inView(".art-rammed") });
+    gsap.from(".art-bales .bale", { y: -220, autoAlpha: 0, rotate: () => R(-20, 20), transformOrigin: "50% 50%", stagger: 0.15, ease: "none", scrollTrigger: inView(".art-bales") });
+    gsap.from(".art-lattice .post, .art-lattice .cane", { drawSVG: 0, stagger: 0.15, ease: "none", scrollTrigger: inView(".art-lattice") });
 
-    const sway = gsap.to(".art-straw .stalk", { rotate: 5, transformOrigin: "50% 100%", duration: 1.8, stagger: 0.2, repeat: -1, yoyo: true, ease: "sine.inOut" });
-    const water = gsap.timeline({ repeat: -1, repeatDelay: 0.4 })
-      .fromTo(".w-drop", { y: -30, autoAlpha: 0 }, { y: 50, autoAlpha: 1, duration: 0.8, ease: "power2.in" })
-      .to(".w-drop", { autoAlpha: 0, scaleY: 0.5, transformOrigin: "50% 100%", duration: 0.15 })
-      .fromTo(".ripple", { scale: 0.2, autoAlpha: 1, transformOrigin: "50% 50%" }, { scale: 2.2, autoAlpha: 0, duration: 1.4, stagger: 0.35, ease: "power1.out" }, "<");
-    loopWhileVisible(section, [sway, water]);
+    const rammer = gsap.to(".art-rammed .rammer", { y: 12, duration: 0.35, repeat: -1, yoyo: true, ease: "power2.in", repeatDelay: 0.25 });
+    const bales = gsap.to(".art-bales .bale", { rotate: 1.5, transformOrigin: "50% 100%", duration: 1.6, repeat: -1, yoyo: true, ease: "sine.inOut", stagger: 0.2, delay: 1 });
+    loopWhileVisible(section, [rammer, bales]);
+  }
+
+  /* =========================================================
+     E-BOOK — el libro aparece, flota y brilla
+     ========================================================= */
+  function ebook() {
+    const visual = $(".ebook__visual");
+    const book = $(".ebook__book");
+
+    gsap.timeline({
+      scrollTrigger: { trigger: ".ebook", start: "top 65%", toggleActions: "play none none reverse" },
+    })
+      .from(".ebook__copy > *", { y: 30, autoAlpha: 0, duration: 0.7, stagger: 0.08, ease: "power2.out" }, 0)
+      .from(book, { autoAlpha: 0, y: 140, rotationY: -70, duration: 1.3, ease: "power3.out" }, 0.3)
+      .from(".ebook__badge", { scale: 0, rotate: -120, duration: 0.9, ease: "back.out(2)" }, 1)
+      .from(".ebook__badge .doodle", { drawSVG: 0, duration: 0.9, ease: "power2.inOut" }, 1.1);
+
+
+    const loops = [
+      gsap.to(".ebook__book img", { y: -14, duration: 2.6, repeat: -1, yoyo: true, ease: "sine.inOut" }),
+      gsap.timeline({ repeat: -1, repeatDelay: 2.4, delay: 1.5 })
+        .set(".ebook__shine", { autoAlpha: 1 })
+        .fromTo(".ebook__shine", { "--sx": "-120%" }, { "--sx": "120%", duration: 1.2, ease: "power2.inOut" }),
+      // el vaivén va sobre los hijos para no pisar la entrada del sello
+      gsap.to(".ebook__badge > *", { rotate: 8, scale: 1.06, transformOrigin: "50% 50%", duration: 1.4, repeat: -1, yoyo: true, ease: "sine.inOut" }),
+    ];
+    loopWhileVisible(".ebook", loops);
+
+    if (!matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    const rx = gsap.quickTo(book, "rotationX", { duration: 0.7, ease: "power3" });
+    const ry = gsap.quickTo(book, "rotationY", { duration: 0.7, ease: "power3" });
+    let box;
+    visual.addEventListener("pointerenter", () => { box = visual.getBoundingClientRect(); });
+    visual.addEventListener("pointermove", e => {
+      if (!box) return;
+      ry(((e.clientX - box.left) / box.width - 0.5) * 24);
+      rx(-((e.clientY - box.top) / box.height - 0.5) * 18);
+    });
+    visual.addEventListener("pointerleave", () => { rx(0); ry(0); box = null; });
+  }
+
+  /* ---------- tienda ---------- */
+  function shop() {
+    gsap.fromTo(".shop__media", { rotate: -6, scale: 0.85, autoAlpha: 0 }, {
+      rotate: 2, scale: 1, autoAlpha: 1, ease: "none",
+      scrollTrigger: { trigger: ".shop", start: "top 90%", end: "center 60%", scrub: 1 },
+    });
+    gsap.fromTo(".shop__media img", { scale: 1.25 }, {
+      scale: 1, ease: "none",
+      scrollTrigger: { trigger: ".shop", start: "top bottom", end: "bottom top", scrub: true },
+    });
+    gsap.timeline({ scrollTrigger: { trigger: ".shop__copy", start: "top 75%", toggleActions: "play none none reverse" } })
+      .from(".shop__doodle .doodle", { drawSVG: 0, duration: 1, ease: "power2.inOut" })
+      .from(".shop__copy .eyebrow, .shop__text", { y: 30, autoAlpha: 0, duration: 0.8, stagger: 0.1, ease: "power2.out" }, 0.2)
+      .from(".shop .btn", { y: 20, autoAlpha: 0, scale: 0.9, duration: 0.6, ease: "back.out(2)" }, 0.5);
   }
 
   /* =========================================================
@@ -371,11 +494,12 @@
       .from(split.chars, { yPercent: 90, autoAlpha: 0, rotate: () => R(-20, 20), duration: 0.8, stagger: 0.035, ease: "back.out(1.8)" }, "-=0.3")
       .from(".visit__scribble .doodle", { drawSVG: 0, duration: 0.9, ease: "power2.inOut" }, "-=0.4")
       .from(".visit__card", { y: 80, rotate: -3, autoAlpha: 0, duration: 1, ease: "power3.out" }, "-=0.6")
-      .from(".visit__actions .btn", { y: 20, autoAlpha: 0, stagger: 0.1, duration: 0.5 }, "-=0.5")
+      .from(".visit__list li", { x: -20, autoAlpha: 0, stagger: 0.1, duration: 0.5 }, "-=0.5")
+      .from(".visit__actions .btn", { y: 20, autoAlpha: 0, stagger: 0.1, duration: 0.5 }, "-=0.3")
       .from(".visit .hand-note", { autoAlpha: 0, x: -20, duration: 0.6 }, "-=0.2");
 
     const loops = [
-      gsap.to(".visit__card", { y: -10, duration: 3.2, repeat: -1, yoyo: true, ease: "sine.inOut" }),
+      gsap.to(".visit__card", { yPercent: -2.5, duration: 3.2, repeat: -1, yoyo: true, ease: "sine.inOut" }),
       gsap.to(stars.filter((_, i) => i % 3 === 0), { scale: 0.3, transformOrigin: "50% 50%", duration: () => R(0.8, 2), repeat: -1, yoyo: true, stagger: { each: 0.2, from: "random" } }),
       ...flies.map(f => gsap.to(f, {
         x: () => R(-90, 90), y: () => R(-60, 40), opacity: () => R(0.15, 1),
@@ -399,7 +523,9 @@
         nav.classList.toggle("is-hidden", self.direction === 1 && y > 300);
       },
     });
-    gsap.from(".nav__logo path", { drawSVG: 0, duration: 1.6, ease: "power2.inOut", delay: 0.2 });
+    gsap.from(".nav__logo img", { scale: 0, rotate: -120, duration: 1, ease: "back.out(1.8)", delay: 0.2 });
+    gsap.from(".wa-float", { scale: 0, rotate: -90, duration: 0.8, ease: "back.out(2)", delay: 2.2 });
+    gsap.to(".wa-float", { scale: 1.08, duration: 0.25, repeat: -1, yoyo: true, repeatDelay: 4, delay: 4, ease: "power1.inOut" });
     gsap.from(".nav__links a", { y: -20, autoAlpha: 0, stagger: 0.06, duration: 0.6, delay: 0.3, ease: "power2.out" });
   }
 
@@ -417,9 +543,13 @@
       root.classList.add("js-motion");
       hero();
       manifesto();
-      build(ctx.conditions.mobile);
+      photoReveal(ctx.conditions.mobile);
       chapters();
-      materials();
+      story();
+      build(ctx.conditions.mobile);
+      techniques();
+      ebook();
+      shop();
       visit();
       chrome();
       return () => {
